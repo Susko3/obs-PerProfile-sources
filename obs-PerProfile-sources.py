@@ -35,8 +35,8 @@ def get_regex_for_profile_name(profile_name: str) -> re.Pattern:
     return re.compile(gx)
 
 
-PROFILES_RES: list[re.Pattern] = None
-CURRENT_PROFILE_RE: re.Pattern = None
+PROFILES_RES: list[re.Pattern] = []
+CURRENT_PROFILE_RE: re.Pattern = re.compile(r'^\b$')  # regex that will never match
 
 
 def update_profiles():
