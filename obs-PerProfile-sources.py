@@ -27,6 +27,7 @@ Put {} where you want to have the profile name be
 ℹ For example
 - [profile:{}]
 - [p:{}]
+- {}
 """.strip()
 
 
