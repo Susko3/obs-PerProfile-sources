@@ -16,8 +16,10 @@ def debug(*args):
     ...
 
 
+DEFAULT_REGEX_PATTERN = r"[profile:{}]"
+
 PROPERTIES_REGEX_PATTERN = "regex_pattern"
-properties_regex_pattern = "[profile:{}]"
+properties_regex_pattern = DEFAULT_REGEX_PATTERN
 
 REGEX_PATTERN_HELP_TEXT = """
 Put {} where you want to have the profile name be
@@ -158,7 +160,7 @@ def callback(event):
 
 
 def script_defaults(settings):
-    S.obs_data_set_default_string(settings, PROPERTIES_REGEX_PATTERN, "[profile:{}]")
+    S.obs_data_set_default_string(settings, PROPERTIES_REGEX_PATTERN, DEFAULT_REGEX_PATTERN)
 
 
 def script_update(settings):
