@@ -30,6 +30,10 @@ Put {} where you want to have the profile name be
 
 def get_regex_for_profile_name(profile_name: str) -> re.Pattern:
     global properties_regex_pattern
+
+    if '{}' not in properties_regex_pattern:
+        raise ValueError(f"Invalid regex pattern: {properties_regex_pattern}")
+
     gx = re.escape(properties_regex_pattern.format(profile_name))
     debug(f" {gx}")
     return re.compile(gx)
@@ -42,13 +46,16 @@ CURRENT_PROFILE_RE: re.Pattern = re.compile(r'^\b$')  # regex that will never ma
 def update_profiles():
     global PROFILES_RES
     global CURRENT_PROFILE_RE
-    current = S.obs_frontend_get_current_profile()
-    debug("current:")
-    CURRENT_PROFILE_RE = get_regex_for_profile_name(current)
+    try:
+        current = S.obs_frontend_get_current_profile()
+        debug("current:")
+        CURRENT_PROFILE_RE = get_regex_for_profile_name(current)
 
-    debug("list:")
-    profile_list = S.obs_frontend_get_profiles()
-    PROFILES_RES = list(map(get_regex_for_profile_name, profile_list))
+        debug("list:")
+        profile_list = S.obs_frontend_get_profiles()
+        PROFILES_RES = list(map(get_regex_for_profile_name, profile_list))
+    except ValueError as e:
+        debug('💣 Failed to set regex:', e)
 
 
 def hide_show(name: str) -> bool | None:
